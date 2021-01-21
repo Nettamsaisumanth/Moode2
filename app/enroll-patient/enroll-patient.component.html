@@ -1,0 +1,102 @@
+<button (click) = "back()"class="btn btn-success" style = "background-color: #47f3ff ;color: black;">Back</button>
+
+<br>
+<br>
+<div><h4 style = "color: blueviolet; background-color: cornsilk; text-align: center;">PATIENT REGISTRATION</h4></div>
+<div class="container-fluid mb-5" [hidden]="submitted" >
+
+    <form #patientForm="ngForm" (ngSubmit)="onSubmit()">
+
+
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control " id="firstName" name="firstName" [(ngModel)]="patient.firstName"
+                #firstName="ngModel" required [class.is-invalid]="firstName.invalid && firstName.touched">
+            <small class="text-danger" [class.d-none]="firstName.valid || firstName.untouched">First Name is
+                required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="patient.lastName"
+                #lastName="ngModel" required [class.is-invalid]="lastName.invalid && lastName.touched">
+            <small class="text-danger" [class.d-none]="lastName.valid || lastName.untouched">Last Name is
+                required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="passWord">Pass Word</label>
+            <input type="password" class="form-control" id="passWord" name="passWord" [(ngModel)]="patient.passWord"
+                #passWord="ngModel" required [class.is-invalid]="passWord.invalid && passWord.touched">
+            <small class="text-danger" [class.d-none]="passWord.valid || passWord.untouched">PassWord is
+                required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="dateOfBirth">Date Of Birth</label>
+            <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth"
+                [(ngModel)]="patient.dateOfBirth" #dateOfBirth="ngModel" required
+                [class.is-invalid]=" dateOfBirth.invalid && dateOfBirth.touched" max="2020-12-3">
+                <small class="text-danger" [class.d-none]="dateOfBirth.valid || dateOfBirth.untouched">Date of is
+                    required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="emailId">Email ID</label>
+            <input type="email" class="form-control" id="emailId" name="emailId" [(ngModel)]="patient.emailId"
+                #emailId="ngModel" required [class.is-invalid]="emailId.invalid && emailId.touched">
+            <small class="text-danger" [class.d-none]="emailId.valid || emailId.untouched">Email is required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="contactNumber">Contact number</label>
+            <input type="contactNumber" class="form-control" id="contactNumber" name="contactNumber"
+                [(ngModel)]="patient.contactNumber" #contactNumber="ngModel" required pattern="^\d{10}$"
+                [class.is-invalid]="contactNumber.invalid && contactNumber.touched">
+            <div *ngIf="contactNumber.errors && (contactNumber.invalid || contactNumber.untouched)">
+                <small class="text-danger" *ngIf="contactNumber.errors.required">Contact Number is required</small>
+                <small class="text-danger" *ngIf="contactNumber.errors.pattern">Contact Number must be 10 digits</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="state"> Select a state</label><br>
+            <select (blur)="validateState(state.value)" (change)="validateState(state.value)"  #state="ngModel"
+                [class.is-invalid]="stateHasError && state.touched" [(ngModel)]="patient.state" name = "state" id = "state">
+                
+                <option value="default" selected>select a state</option>
+                <option *ngFor="let state of states">{{ state}} </option>
+            </select>
+            <small class="text-danger" [class.d-none]="!stateHasError || state.untouched">State is required</small>
+        </div> 
+  
+        <div class="form-group">
+            <label>Insurance Plan</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="insurancePlan" value="NORMAL"
+                    [(ngModel)]="patient.insurancePlan" #insurancePlan="ngModel" required>
+                <label class="form-check-label">Normal</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="insurancePlan" value="PREMIUM"
+                    [(ngModel)]="patient.insurancePlan" #insurancePlan="ngModel" required>
+                <label class="form-check-label">Premium</label>
+            </div>
+            <div *ngIf="insurancePlan.invalid && insurancePlan.untouched" class="text-danger">
+                Insurance Plan is required
+            </div>
+        </div>
+
+        <button [disabled] = "patientForm.form.invalid || stateHasError" type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+
+</div>
+
+
+
+<div [hidden]="!submitted">
+    <h4>Data submitted successfully!</h4>
+    <button class="btn btn-primary" (click)="newPatient()">Add Patient</button>
+  </div>

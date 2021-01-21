@@ -1,0 +1,33 @@
+.btn{
+    margin-left: 10px;
+    margin-right:14px;
+    min-width: 140px;
+    max-width: 200px;
+}
+
+.container1{
+    /* height: 45em;
+  background-size: cover;
+  width: auto; */
+  /* position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    opacity:.9;
+    height:700em;
+    width:23em; */
+    /* //background-color:transparent; */
+    height: 50%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    background-image: url(src/app/images/hsptl.jfif);
+}
+
+.logout{
+    text-align: right;
+}

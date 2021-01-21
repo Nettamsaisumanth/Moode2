@@ -1,0 +1,92 @@
+<button (click) = "back()"class="btn btn-success" style = "background-color: #47f3ff ;color: black;">Back</button>
+        <br>
+        <br>
+
+<div><h4 style = "color: blueviolet; background-color: cornsilk; text-align: center;">PHYSICIAN REGISTRATION</h4></div>
+
+
+
+<div class="container-fluid mb-5" [hidden]="submitted" >
+
+    <form #physicianForm="ngForm" >
+
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control " id="firstName" name="firstName" [(ngModel)]="physician.firstName"
+                #firstName="ngModel" required [class.is-invalid]="firstName.invalid && firstName.touched">
+            <small class="text-danger" [class.d-none]="firstName.valid || firstName.untouched">First Name is
+                required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="physician.lastName"
+                #lastName="ngModel" required [class.is-invalid]="lastName.invalid && lastName.touched">
+            <small class="text-danger" [class.d-none]="lastName.valid || lastName.untouched">Last Name is
+                required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="department">Select Department</label><br>
+            <select   #department="ngModel"
+                [class.is-invalid]="department.invalid && department.touched" [(ngModel)]="physician.department" name = "department" id = "department" required>
+                <option *ngFor="let department of departments">{{ department}} </option>
+            </select>
+            <small class="text-danger" [class.d-none]="department.valid || department.untouched">department is required</small>
+        </div> 
+
+        <div class="form-group">
+            <label for="qualification">Select Qualification</label><br>
+            <select   #qualification="ngModel"
+                [class.is-invalid]="qualification.invalid && qualification.touched" [(ngModel)]="physician.qualification" name = "qualification" id = "qualification" required>
+                <option *ngFor="let qualification of qualifications">{{ qualification}} </option>
+            </select>
+            <small class="text-danger" [class.d-none]="qualification.valid || qualification.untouched">department is required</small>
+        </div> 
+
+        <div class="form-group">
+            <label for="yearsOfExperience">Years os Experience</label>
+            <input type="number" class="form-control" id="yearsOfExperience" required [(ngModel)]="physician.yearsOfExperience" name="yearsOfExperience" #yearsOfExperience="ngModel" [class.is-invalid]="yearsOfExperience.invalid && yearsOfExperience.touched">
+            <small class="text-danger" [class.d-none]="yearsOfExperience.valid || yearsOfExperience.untouched">yearsOfExperience is required</small>
+          </div>  
+  
+          <div class="form-group">
+            <label for="state">Select State</label><br>
+            <select   #state="ngModel"
+                [class.is-invalid]="state.invalid && state.touched" [(ngModel)]="physician.state" name = "state" id = "state" required>
+                <option *ngFor="let state of states">{{ state}} </option>
+            </select>
+            <small class="text-danger" [class.d-none]="state.valid || state.untouched">State is required</small>
+        </div>  
+
+        <div class="form-group">
+            <label>Insurance Plan Offered</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="insurancePlan" value="NORMAL"
+                [(ngModel)]="physician.insurancePlan" #insurancePlan="ngModel" required>
+                <label class="form-check-label">Normal</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="insurancePlan" value="PREMIUM"
+                    [(ngModel)]="physician.insurancePlan" #insurancePlan="ngModel" required>
+                <label class="form-check-label">Premium</label>
+            </div>
+            <div *ngIf="insurancePlan.invalid && insurancePlan.untouched" class="text-danger">
+                Insurance Plan is required
+            </div>
+        </div> 
+
+        <button [disabled] = "physicianForm.form.invalid " type="submit" class="btn btn-success"  (click)="onSubmit()">Submit</button>
+        <button class="btn btn-danger" (click) = "resetForm(physicianForm)">Reset</button>
+    
+        </form>
+
+    </div>
+
+    
+
+    <div [hidden]="!submitted">
+        <h4>You submitted successfully!</h4>
+        <button class="btn btn-primary" (click)="newPhysician()">Add</button>
+      </div>
